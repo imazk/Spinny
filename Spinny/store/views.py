@@ -11,6 +11,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from .Validation import check_validity
 
+
 '''
 Create new Box api
 '''
@@ -37,6 +38,19 @@ def list_box(request):
     boxes = BoxFilter(request.GET,queryset=box_queryset).qs
     serializer = BoxSerializer(boxes, many=True)
     return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def ApiOverview(request):
+    api_urls = {
+        'create_box': 'store/box/create/',
+        'list_box':'store/box/list/',
+        'my_list_box':'store/box/my_list',
+        'update_box': 'store/box/update/pk',
+        'delete_box': 'store/box/delete/pk'
+    }
+  
+    return Response(api_urls)
 
 
 '''
@@ -87,6 +101,7 @@ def delete_box(request,pk):
         else:
             data = dict()
             data['reason'] = "You must be creator of the Box."
+            serializer = AdminBoxSerializer(box, data=data)
             return Response(data, status=status.HTTP_403_FORBIDDEN)
         return Response(serializer.errors, status=status.HTTP_200_OK)
 
