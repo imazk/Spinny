@@ -25,7 +25,7 @@ SECRET_KEY = 'o+v3#^g9l7kt9+n6w6j!*1w((q9ym_p&c6m)9@wc#vgc7j&21g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'spinnyproj.herokuapp.com']
 A1 = 100
 V1 = 1000
 L1 = 100
@@ -144,3 +144,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+if DEBUG:
+   STATICFILES_DIRS = [
+   os.path.join(BASE_DIR, 'static'),
+   ]
+else:
+   STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
